@@ -1,0 +1,92 @@
+<div class="row mt-5">
+  <div class="col-lg-8">
+    <div class="userListDiv">
+      <div class="eachColoumnHeader mb-2 pt-3 pb-3">
+        <h2 class="text-center">List Screen</h2>
+      </div>
+      <div class="eachSecondaryHeading">
+        <div class="row mb-2">
+          <div class="col-lg-10">
+            <p>Team Members</p>
+          </div>
+          <div class="col-lg-2">
+            <button class="btn btn-primary" (click)="addUserScreen()">Add User</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of userDetails">
+                <td>{{user.fname}} {{user.lname}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.contact}}</td>
+                <td>
+                  <button class="btn btn-primary ml-2" (click)="edituser(user.userId)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                  <button class="btn btn-danger ml-2" (click)="deleteuser(user)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="userAddDiv">
+      <div class="eachColoumnHeader mb-2 pt-3 pb-3">
+        <h2 class="text-center">Add & Edit Screen</h2>
+      </div>
+      <div class="eachSecondaryHeading">
+        <p>Add Team Members</p>
+      </div>
+      <div *ngIf="addScreen">
+          <form class="form" #f="ngForm" (ngSubmit)="userRegistrationForm(f)">
+           <div class="form-group">
+             <label for="userName">First Name</label>
+             <input type="text" class="form-control" id="userName" required [(ngModel)]="user.fname" #fname="ngModel" name="fname" [ngClass]="{'is-invalid': f.submitted && fname.invalid}"/>
+             <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback">
+               <div *ngIf="fname.errors.required">Name is mandatory</div>
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="userName">Last Name</label>
+             <input type="text" class="form-control" id="userName" required [(ngModel)]="user.lname" #lname="ngModel" name="lname" [ngClass]="{'is-invalid': f.submitted && lname.invalid}"/>
+             <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback">
+               <div *ngIf="lname.errors.required">Name is mandatory</div>
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="email">Email</label>
+             <input type="email" class="form-control" id="email" required [(ngModel)]="user.email" #email="ngModel" name="email" [ngClass]="{'is-invalid': f.submitted && email.invalid}" email/>
+             <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+               <div *ngIf="email.errors.required">Email is Mandatory</div>
+               <div *ngIf="email.errors.email">Enater Valid Email</div>
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="contactNo">Contact Number</label>
+             <input type="text" class="form-control" id="contactNo" required [(ngModel)]="user.contact" #contact="ngModel" name="contact" [ngClass]="{'is-invalid': f.submitted && contact.invalid}"/>
+             <div *ngIf="f.submitted && contact.invalid" class="invalid-feedback">
+               <div *ngIf="contact.errors.required"> Contact is Madantory </div>
+             </div>
+           </div>
+           <div class="form-group">
+             <button type="submit" class="btn btn-primary" *ngIf="registerButton">Register</button>
+             <button type="button" class="btn btn-primary" *ngIf="updateButton" (click)="Updateuser(user)">Update</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
